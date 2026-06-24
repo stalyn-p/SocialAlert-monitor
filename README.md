@@ -112,13 +112,63 @@ El ecosistema separa de forma modular las responsabilidades de captura, persiste
  │ (Puerto 8001)│ │ (Puerto 8002)│              │ (Puerto 8003)│ │ (Puerto 8004)│
  └──────────────┘ └──────────────┘              └──────────────┘ └──────────────┘
 
-💻 Tecnologías Utilizadas
--Interfaz Gráfica (Frontend): Next.js 14, React 18, TailwindCSS, Leaflet Maps, Chart.js.
--Servicio REST Central (Backend): Python 3.10+, FastAPI, Uvicorn, Passlib (Bcrypt), PyJWT.
--Agentes de Extracción (Workers): Playwright Async Headless Core, BeautifulSoup4.
--Base de Datos: MongoDB Community Server (NoSQL con indexación compuesta).
--Daemonizador de Procesos: PM2 (Process Manager 2 Runtime).
+## 💻 Tecnologías Utilizadas
 
-⚙️ Requisitos Técnicos del SistemaRecursoRequisito Mínimo (Implementación OVA)Recomendado (Producción / Alta Carga)Almacenamiento80 GB SSD150 GB NVMeMemoria RAM6 GB16 GB DDR4/DDR5Procesador (CPU)6 Núcleos (Virtualizados)12 Núcleos o superiorLimitación CPUNota: Si se configuran misiones masivas o lotes paralelos elevados, el uso de navegadores Chromium simultáneos escalará la demanda de hardware de forma considerable.
+El desarrollo del ecosistema se basó en la selección de tecnologías de código abierto de alto rendimiento, garantizando la escalabilidad y el sigilo del sistema:
+
+* **Interfaz Gráfica (Frontend):** Next.js 14, React 18 y TailwindCSS para el maquetado visual adaptativo. La cartografía interactiva se procesa mediante Leaflet Maps, y las métricas estadísticas mediante Chart.js.
+* **Servicio REST Central (Backend):** Python 3.10+, FastAPI y Uvicorn para la exposición de endpoints asíncronos de baja latencia. El subsistema de seguridad emplea Passlib (Bcrypt) para hashing y PyJWT para sesiones tokens.
+* **Agentes de Extracción (Workers):** Playwright Async Headless Core y BeautifulSoup4 para la navegación sigilosa y el parseo del DOM web.
+* **Base de Datos:** MongoDB Community Server, configurado de manera local para optimizar los tiempos de persistencia NoSQL mediante indexación compuesta.
+* **Daemonizador de Procesos:** PM2 (Process Manager 2 Runtime) encargado de la persistencia de procesos, el balanceo básico de carga y la administración de logs.
+
+---
+
+## ⚙️ Requisitos Técnicos del Sistema
+
+| Recurso | Requisito Mínimo (Implementación OVA) | Recomendado (Producción / Alta Carga) |
+| :--- | :--- | :--- |
+| **Almacenamiento** | **80 GB SSD** | 150 GB NVMe |
+| **Memoria RAM** | **6 GB** | 16 GB DDR4/DDR5 |
+| **Procesador (CPU)**| **6 Núcleos** (Virtualizados) | 12 Núcleos o superior |
+
+> *Nota Operativa:* Si se configuran misiones masivas o lotes paralelos elevados, el uso de navegadores Chromium simultáneos escalará la demanda de hardware de forma considerable en el procesador.
+
+---
+
+## 🔌 Puertos y Microservicios Utilizados
+
+| Nombre del Proceso PM2 | Tecnología | Puerto | Protocolo | Descripción Operativa |
+| :--- | :--- | :--- | :--- | :--- |
+| **`DASHBOARD-WEB`** | Next.js Engine | `3000` | HTTP | Interfaz de usuario (Panel de control reactivo). |
+| **`CEREBRO-API`** | FastAPI Central | `8000` | HTTP | Núcleo de servicios RESTful y persistencia NoSQL. |
+| **`TIKTOK-INTEL`** | Playwright Worker | `8001` | HTTP | Extractor táctico especializado en TikTok DOM. |
+| **`TWITTER-INTEL`** | Playwright Worker | `8002` | HTTP | Extractor táctico especializado en Twitter (X). |
+| **`FACEBOOK-INTEL`** | Playwright Worker | `8003` | HTTP | Extractor táctico especializado en Facebook. |
+| **`INSTAGRAM-INTEL`**| Playwright Worker | `8004` | HTTP | Extractor táctico especializado en Instagram. |
+| **`ESPIA-MONITOR`** | Python Threading | `N/A` | Interno | Orquestador y despachador cíclico de misiones. |
+| **`N/A`** | MongoDB Daemon | `27017` | TCP | Motor de persistencia para misiones y alertas. |
+
+---
+
+## 🗄️ Estructura de Base de Datos (MongoDB)
+
+El sistema utiliza la base de datos NoSQL `social_alert_db` estructurada en 4 colecciones clave para garantizar consultas instantáneas sin bloquear el renderizado:
+
+### 1. Colección: `tareas` (Misiones)
+Estructura encargada de la persistencia de los objetivos activos del radar:
+```json
+{
+  "_id": "ObjectId",
+  "query": "sicariato guayaquil, muerte violenta guasmo",
+  "redes": ["twitter", "tiktok"],
+  "medios": ["eluniverso"],
+  "estado": "activo",
+  "id_visual": "1719174000",
+  "progreso": 100,
+  "stats": { "analizados": 1540, "positivos": 127 }
+}
+
+
 
 
