@@ -221,4 +221,74 @@ Repositorio forense donde impactan las publicaciones extraídas validadas:
     ├── package.json        # Manifiesto de dependencias Node.js
     └── tailwind.config.js  # Configuración del motor Tailwind
 ```
+### 📦 Implementación desde Máquina Virtual OVA
+Para fines de evaluación académica en la UNIR o rápida auditoría, el sistema completo se distribuye comprimido en formato .OVA alojado en la nube. Esta máquina cuenta con auto-descubrimiento DHCP.
 
+### 1. Descarga e Importación
+Descargue el archivo unificado de la máquina virtual desde el servidor seguro de MEGA: https://mega.nz/#!social_monitor_v295_stable_unir_pauta
+
+Abra Oracle VM VirtualBox (o VMware).
+
+Seleccione Archivo > Importar servicio virtualizado y cargue el .ova.
+
+⚠️ CONFIGURACIÓN OBLIGATORIA DE RED: En las propiedades de red de la Máquina Virtual, asegúrese de que el adaptador esté configurado en modo "Adaptador Puente" (Bridged Adapter) y elija su tarjeta de red física de salida. Esto garantiza que el router de su entorno le provea una dirección IP válida mediante DHCP.
+
+Ejecute la importación.
+
+### 2. Credenciales del Sistema Operativo (Consola Linux / SSH)
+Al encender la máquina virtual, podrá acceder a la consola con los siguientes privilegios:
+```Bash
+-Usuario SSH / Linux: monitor
+-Contraseña Linux: monitor
+```
+Para escalar a root y obtener privilegios de administración, ejecute: sudo su e introduzca la contraseña monitor.
+
+### 3. Conexión al Dashboard e Identidad de Pruebas
+Una vez encendido el sistema, identifique la IP asignada por su red local mediante el comando ip a (por ejemplo: 192.168.3.104). Abra el navegador de su máquina física (Host) e ingrese a la dirección:
+```Bash
+👉 http://192.168.3.104:3000
+```
+### 4. Credenciales de Acceso a la Interfaz Web (Dashboard)
+```Bash
+Usuario: admin
+Contraseña: Csirt2026.
+```
+### 🛠️ Instalación Manual Paso a Paso
+Si decide realizar un despliegue nativo sin la máquina virtual, ejecute la siguiente secuencia en un sistema Ubuntu/Debian limpio:
+
+### 1. Enriquecimiento del Sistema e Instalación de Dependencias
+```Bash
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y python3 python3-pip python3-venv mongodb nodejs npm git curl
+```
+### 2. Despliegue del Entorno Virtual y Librerías de Extracción
+```Bash
+cd /opt/social-monitor
+python3 -m venv venv
+source venv/bin/activate
+pip install fastapi uvicorn pymongo pandas requests passlib python-jose playwright schedule
+playwright install chromium
+playwright install-deps
+```
+### 3. Compilación de la Interfaz Web (Production Build)
+```Bash
+cd /opt/social-monitor/frontend
+npm install
+npm run build
+```
+
+### ⚙️ Configuración Inicial y Accesos
+El sistema cuenta con un motor adaptativo de descubrimiento DHCP. No requiere configurar IPs estáticas en archivos .env. El frontend calcula su origen en tiempo real mediante la instrucción:
+
+```JavaScript
+const API_URL = typeof window !== "undefined" ? `http://${window.location.hostname}:8000` : "http://localhost:8000";
+```
+Para inicializar el analista administrador por defecto en MongoDB, acceda a la consola interactiva de python y ejecute:
+```Python
+from pymongo import MongoClient
+from passlib.context import CryptContext
+
+db = MongoClient("mongodb://localhost:27017/")['social_alert_db']
+pwd_context = CryptContext(schemes=["pbkdf2_sha256"])
+db.users.insert_one({"username": "admin", "hashed_password": pwd_context.hash("Csirt2026.")})
+```
