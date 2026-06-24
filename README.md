@@ -75,6 +75,7 @@ El sistema está optimizado para actuar bajo condiciones estrictas de **Sigilo O
 
 El ecosistema separa de forma modular las responsabilidades de captura, persistencia, control y presentación de datos a través de 7 microservicios independientes administrados por PM2:
 
+```text
    ┌─────────────────────────────────────────────────────────────────────────┐
    │                            DASHBOARD-WEB                                │
    │                       (Next.js / Puerto 3000)                           │
@@ -110,7 +111,7 @@ El ecosistema separa de forma modular las responsabilidades de captura, persiste
  │ TIKTOK-INTEL │ │TWITTER-INTEL │              │FACEBOOK-INTEL│ │INSTAGRAM-INTEL
  │ (Puerto 8001)│ │ (Puerto 8002)│              │ (Puerto 8003)│ │ (Puerto 8004)│
  └──────────────┘ └──────────────┘              └──────────────┘ └──────────────┘
-
+```
 ## 💻 Tecnologías Utilizadas
 
 El desarrollo del ecosistema se basó en la selección de tecnologías de código abierto de alto rendimiento, garantizando la escalabilidad y el sigilo del sistema:
@@ -166,6 +167,39 @@ Estructura encargada de la persistencia de los objetivos activos del radar:
   "id_visual": "1719174000",
   "progreso": 100,
   "stats": { "analizados": 1540, "positivos": 127 }
+}
+```
+### 2. Colección: menciones (Hallazgos Confirmados)
+Repositorio forense donde impactan las publicaciones extraídas validadas:
+```json
+{
+  "_id": "ObjectId",
+  "tarea_id": "1719174000",
+  "termino_buscado": "sicariato guayaquil",
+  "fuente": "Twitter (X)",
+  "sitio": "Red Social / Web",
+  "titulo": "Urgente: Se reporta sicariato en los exteriores de un mercado de Montebello...",
+  "url": "[https://twitter.com/user/status/12345678](https://twitter.com/user/status/12345678)",
+  "sentimiento": "NEGATIVO",
+  "fecha": "2026-06-23 20:29:33"
+}
+```
+### 3. Colección: config (Parámetros Operativos del Sistema)
+```json
+{
+  "_id": "global",
+  "concurrencia": 1,
+  "intervalo_scan": 10,
+  "orden_visual": ["1719174000", "1719175000"],
+  "reset_signal": false
+}
+```
+### 4. Colección: users (Control de Credenciales)
+JSON
+{
+  "_id": "ObjectId",
+  "username": "admin",
+  "hashed_password": "$pbkdf2-sha256$29000$encryptedhash..."
 }
 
 
