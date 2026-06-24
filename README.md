@@ -195,13 +195,30 @@ Repositorio forense donde impactan las publicaciones extraídas validadas:
 }
 ```
 ### 4. Colección: users (Control de Credenciales)
-JSON
+```json
 {
   "_id": "ObjectId",
   "username": "admin",
   "hashed_password": "$pbkdf2-sha256$29000$encryptedhash..."
 }
-
-
-
+```
+### 📂 Estructura de Carpetas del Proyecto
+```Bash
+/opt/social-monitor/
+├── api.py                  # API REST FastAPI (Proceso: CEREBRO-API)
+├── monitor.py              # Script Orquestador Core (Proceso: ESPIA-MONITOR)
+├── tiktok_server.py        # Agente Playwright TikTok (Proceso: TIKTOK-INTEL)
+├── twitter_server.py       # Agente Playwright Twitter (Proceso: TWITTER-INTEL)
+├── facebook_server.py      # Agente Playwright Facebook (Proceso: FACEBOOK-INTEL)
+├── instagram_server.py     # Agente Playwright Instagram (Proceso: INSTAGRAM-INTEL)
+├── requirements.txt        # Manifiesto de dependencias Python
+├── venv/                   # Entorno virtual de aislamiento Python
+└── frontend/               # Directorio del Dashboard Web (Proceso: DASHBOARD-WEB)
+    ├── app/
+    │   ├── page.js         # Interfaz Táctica con useMemo y Mapas
+    │   ├── globals.css     # Estilos y variables CSS Tailwind
+    │   └── layout.js       # Next.js Root Layout
+    ├── package.json        # Manifiesto de dependencias Node.js
+    └── tailwind.config.js  # Configuración del motor Tailwind
+```
 
