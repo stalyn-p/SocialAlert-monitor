@@ -292,3 +292,30 @@ db = MongoClient("mongodb://localhost:27017/")['social_alert_db']
 pwd_context = CryptContext(schemes=["pbkdf2_sha256"])
 db.users.insert_one({"username": "admin", "hashed_password": pwd_context.hash("Csirt2026.")})
 ```
+
+### 🚀 Ejecución del Proyecto (Gestión PM2)Para garantizar la ejecución ininterrumpida de los 7 microservicios, se utiliza PM2 como controlador de procesos del ecosistema:
+```Bash
+sudo npm install -g pm2
+cd /opt/social-monitor
+source venv/bin/activate
+
+# Registrar Microservicios en PM2
+`
+pm2 start venv/bin/python3 --name "CEREBRO-API" -- -m uvicorn api:app --host 0.0.0.0 --port 8000
+pm2 start venv/bin/python3 --name "TIKTOK-INTEL" -- tiktok_server.py
+pm2 start venv/bin/python3 --name "TWITTER-INTEL" -- twitter_server.py
+pm2 start venv/bin/python3 --name "FACEBOOK-INTEL" -- facebook_server.py
+pm2 start venv/bin/python3 --name "INSTAGRAM-INTEL" -- instagram_server.py
+pm2 start venv/bin/python3 --name "ESPIA-MONITOR" -- monitor.py
+
+# Registrar Interfaz Gráfica
+cd frontend
+pm2 start npm --name "DASHBOARD-WEB" -- start
+
+# Consolidar persistencia en arranque del S.O.
+pm2 save
+pm2 startup
+```
+
+🔄 Casos de Uso y Flujo de FuncionamientoEscenarios Operativos Comunes:Alerta Temprana en Crisis: Monitorización en tiempo real de disturbios urbanos o ciberamenazas mediante el uso de términos encadenados.Aislamiento de Casos: El analista puede seleccionar una sola de las submisiones activas (ej. sicariato guayaquil) para limpiar el espectro de datos, filtrando la lista de tarjetas y el mapa táctico de inmediato.🧩 Funcionalidades DetalladasSincronización por Lotes (Batching): Diseñado para preservar la integridad del procesador. Si se ingresan 20 misiones pero el lote está fijado en 1, el orquestador procesará de 1 en 1 de arriba hacia abajo de manera descendente.Filtros Inteligentes en Cascada: Al presionar un sub-objetivo en la barra superior, la UI aislará los hallazgos en la pantalla y posicionará los marcadores del mapa Leaflet en torno a ese criterio de búsqueda específico.Garantía Anti-Bloqueo de Interfaz: Toda la volumetría de datos y parseo geográfico pasa por filtros useMemo en React, lo que impide re-renders innecesarios y elimina cualquier retraso o lag al tipear texto en la UI.Fórmulas Forenses Blindadas: Las ecuaciones de la tasa de precisión ($VP / [VP+FP]$) y el tiempo medio de detección ($TMD$) se calculan basándose en los históricos globales de la base de datos, impidiendo desajustes matemáticos al usar filtros parciales en el frontend.📸 Capturas de la Interfaz de Usuario(Reemplace las rutas con imágenes reales al subirlas a producción en GitHub)Pantalla de acceso seguro encargada de la validación mediante Tokens JWT.Dashboard Global mostrando el Filtro interactivo de Submisiones, el Mapa Táctico de Ecuador y los indicadores de Precisión en tiempo real.🔐 Buenas Prácticas de Seguridad y Hardening🚨 Riesgos de Operación Conocidos (OPSEC)Baneo de Firma de Red (Rate Limiting): Si se mantiene el escáner operando con una frecuencia de 1 minuto, los firewalls (WAF) de Google o Meta detectarán la IP del servidor.Mitigación implementada: Ingrese al panel del engranaje ⚙️ y configure la Frecuencia de Barrido a 10 o 15 minutos para simular tráfico humano legítimo y proteger la firma de red.🛠️ Hardening del ServidorAislamiento de MongoDB: No exponga el puerto 27017 al exterior de la red. Modifique /etc/mongod.conf para enlazar únicamente a la interfaz de loopback 127.0.0.1.Firewall Local (UFW): Cierre todos los accesos directos de los microservicios e interfases internas, permitiendo únicamente el tráfico de control web:
+
