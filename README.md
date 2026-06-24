@@ -211,7 +211,9 @@ Repositorio forense donde impactan las publicaciones extraídas validadas:
 ├── twitter_server.py       # Agente Playwright Twitter (Proceso: TWITTER-INTEL)
 ├── facebook_server.py      # Agente Playwright Facebook (Proceso: FACEBOOK-INTEL)
 ├── instagram_server.py     # Agente Playwright Instagram (Proceso: INSTAGRAM-INTEL)
-├── requirements.txt        # Manifiesto de dependencias Python
+├── ecosystem.config.js     # Manifiesto de orquestación y arranque PM2
+├── reset_admin.py          # Script de restauración de accesos criptográficos
+├── requirements.txt        # Manifiesto de dependencias Python pip
 ├── venv/                   # Entorno virtual de aislamiento Python
 └── frontend/               # Directorio del Dashboard Web (Proceso: DASHBOARD-WEB)
     ├── app/
@@ -276,6 +278,134 @@ cd /opt/social-monitor/frontend
 npm install
 npm run build
 ```
+📄 Archivos de Configuración Críticos
+Para asegurar la replicabilidad total del entorno, se anexan las estructuras de los tres archivos de control añadidos en la versión estable:
+
+### 4. requirements.txt (Librerías Python)
+ ```Plaintext
+fastapi==0.110.0
+uvicorn==0.28.0
+pymongo==4.6.2
+pandas==2.2.1
+requests==2.31.0
+passlib[bcrypt]==1.7.4
+python-jose[cryptography]==3.3.0
+playwright==1.42.0
+schedule==1.2.1
+openpyxl==3.1.2
+python-multipart==0.0.9
+```
+### 5. ecosystem.config.js (Orquestación PM2)
+```JavaScript
+module.exports = {
+  apps: [
+    {
+      name: 'CEREBRO-API',
+      script: './venv/bin/python3',
+      args: '-m uvicorn api:app --host 0.0.0.0 --port 8000',
+      cwd: '/opt/social-monitor',
+      autorestart: true,
+      max_memory_restart: '1G'
+    },
+    {
+      name: 'TIKTOK-INTEL',
+      script: './venv/bin/python3',
+      args: 'tiktok_server.py',
+      cwd: '/opt/social-monitor',
+      autorestart: true,
+      max_memory_restart: '1G'
+    },
+    {
+      name: 'TWITTER-INTEL',
+      script: './venv/bin/python3',
+      args: 'twitter_server.py',
+      cwd: '/opt/social-monitor',
+      autorestart: true,
+      max_memory_restart: '1G'
+    },
+    {
+      name: 'FACEBOOK-INTEL',
+      script: './venv/bin/python3',
+      args: 'facebook_server.py',
+      cwd: '/opt/social-monitor',
+      autorestart: true,
+      max_memory_restart: '1G'
+    },
+    {
+      name: 'INSTAGRAM-INTEL',
+      script: './venv/bin/python3',
+      args: 'instagram_server.py',
+      cwd: '/opt/social-monitor',
+      autorestart: true,
+      max_memory_restart: '1G'
+    },
+    {
+      name: 'ESPIA-MONITOR',
+      script: './venv/bin/python3',
+      args: 'monitor.py',
+      cwd: '/opt/social-monitor',
+      autorestart: true,
+      max_memory_restart: '500M'
+    },
+    {
+      name: 'DASHBOARD-WEB',
+      script: 'npm',
+      args: 'start',
+      cwd: '/opt/social-monitor/frontend',
+      autorestart: true,
+      max_memory_restart: '1.5G',
+      env: { NODE_ENV: 'production', PORT: 3000 }
+    }
+  ]
+};
+```
+### 6. reset_admin.py (Script de Recuperación de Credenciales)
+ ```Python
+import sys
+from pymongo import MongoClient
+from passlib.context import CryptContext
+
+def inicializar_administrador():
+    try:
+        client = MongoClient("mongodb://localhost:27017/", serverSelectionTimeoutMS=3000)
+        db = client['social_alert_db']
+        client.server_info()
+    except Exception as e:
+        print(f"[-] Error: No se conectó a MongoDB: {str(e)}")
+        sys.exit(1)
+
+    pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
+    usuario_target = "admin"
+    password_target = "Csirt2026."
+
+    db.users.delete_many({"username": usuario_target})
+    db.users.insert_one({
+        "username": usuario_target,
+        "hashed_password": pwd_context.hash(password_target)
+    })
+    print(f"[+] Credenciales inyectadas con éxito.\nUser: {usuario_target}\nPass: {password_target}")
+
+if __name__ == "__main__":
+    inicializar_administrador()
+```
+
+    
+### 🚀 Ejecución del Ecosistema mediante PM2
+Con la introducción del archivo ecosystem.config.js, no se requiere ejecutar comandos individuales por servicio. Despliegue el entorno completo con las siguientes directivas:
+
+Bash
+cd /opt/social-monitor
+
+# 1. Purgar cualquier proceso remanente en memoria
+pm2 delete all
+
+# 2. Inicializar la arquitectura completa en caliente
+pm2 start ecosystem.config.js
+
+# 3. Consolidar el arranque automático con el S.O.
+pm2 save
+pm2 startup
+
 
 ### ⚙️ Configuración Inicial y Accesos
 El sistema cuenta con un motor adaptativo de descubrimiento DHCP. No requiere configurar IPs estáticas en archivos .env. El frontend calcula su origen en tiempo real mediante la instrucción:
