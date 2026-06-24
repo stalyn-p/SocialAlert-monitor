@@ -112,7 +112,13 @@ El ecosistema separa de forma modular las responsabilidades de captura, persiste
  │ (Puerto 8001)│ │ (Puerto 8002)│              │ (Puerto 8003)│ │ (Puerto 8004)│
  └──────────────┘ └──────────────┘              └──────────────┘ └──────────────┘
 
+💻 Tecnologías Utilizadas
+-Interfaz Gráfica (Frontend): Next.js 14, React 18, TailwindCSS, Leaflet Maps, Chart.js.
+-Servicio REST Central (Backend): Python 3.10+, FastAPI, Uvicorn, Passlib (Bcrypt), PyJWT.
+-Agentes de Extracción (Workers): Playwright Async Headless Core, BeautifulSoup4.
+-Base de Datos: MongoDB Community Server (NoSQL con indexación compuesta).
+-Daemonizador de Procesos: PM2 (Process Manager 2 Runtime).
 
-
+⚙️ Requisitos Técnicos del SistemaRecursoRequisito Mínimo (Implementación OVA)Recomendado (Producción / Alta Carga)Almacenamiento80 GB SSD150 GB NVMeMemoria RAM6 GB16 GB DDR4/DDR5Procesador (CPU)6 Núcleos (Virtualizados)12 Núcleos o superiorLimitación CPUNota: Si se configuran misiones masivas o lotes paralelos elevados, el uso de navegadores Chromium simultáneos escalará la demanda de hardware de forma considerable.
 
 
