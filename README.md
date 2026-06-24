@@ -225,7 +225,7 @@ Repositorio forense donde impactan las publicaciones extraídas validadas:
 Para fines de evaluación académica en la UNIR o rápida auditoría, el sistema completo se distribuye comprimido en formato .OVA alojado en la nube. Esta máquina cuenta con auto-descubrimiento DHCP.
 
 ### 1. Descarga e Importación
-Descargue el archivo unificado de la máquina virtual desde el servidor seguro de MEGA: https://mega.nz/#!social_monitor_v295_stable_unir_pauta
+Descargue el archivo unificado de la máquina virtual desde el servidor seguro de MEGA: [https://mega.nz/#!social_monitor_v295_stable_unir_pauta](https://mega.nz/file/Pxh1TTSR#YNtWuXLH1p46mq4ew0W4j_l5aNRQ5L9ah0a4PAMNFNU)
 
 Abra Oracle VM VirtualBox (o VMware).
 
