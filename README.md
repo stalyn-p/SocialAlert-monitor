@@ -316,6 +316,112 @@ pm2 start npm --name "DASHBOARD-WEB" -- start
 pm2 save
 pm2 startup
 ```
+### 🔄 Casos de Uso y Flujo de Funcionamiento
+Escenarios Operativos Comunes:
+Alerta Temprana en Crisis: Monitorización en tiempo real de disturbios urbanos o ciberamenazas mediante el uso de términos encadenados.
 
-🔄 Casos de Uso y Flujo de FuncionamientoEscenarios Operativos Comunes:Alerta Temprana en Crisis: Monitorización en tiempo real de disturbios urbanos o ciberamenazas mediante el uso de términos encadenados.Aislamiento de Casos: El analista puede seleccionar una sola de las submisiones activas (ej. sicariato guayaquil) para limpiar el espectro de datos, filtrando la lista de tarjetas y el mapa táctico de inmediato.🧩 Funcionalidades DetalladasSincronización por Lotes (Batching): Diseñado para preservar la integridad del procesador. Si se ingresan 20 misiones pero el lote está fijado en 1, el orquestador procesará de 1 en 1 de arriba hacia abajo de manera descendente.Filtros Inteligentes en Cascada: Al presionar un sub-objetivo en la barra superior, la UI aislará los hallazgos en la pantalla y posicionará los marcadores del mapa Leaflet en torno a ese criterio de búsqueda específico.Garantía Anti-Bloqueo de Interfaz: Toda la volumetría de datos y parseo geográfico pasa por filtros useMemo en React, lo que impide re-renders innecesarios y elimina cualquier retraso o lag al tipear texto en la UI.Fórmulas Forenses Blindadas: Las ecuaciones de la tasa de precisión ($VP / [VP+FP]$) y el tiempo medio de detección ($TMD$) se calculan basándose en los históricos globales de la base de datos, impidiendo desajustes matemáticos al usar filtros parciales en el frontend.📸 Capturas de la Interfaz de Usuario(Reemplace las rutas con imágenes reales al subirlas a producción en GitHub)Pantalla de acceso seguro encargada de la validación mediante Tokens JWT.Dashboard Global mostrando el Filtro interactivo de Submisiones, el Mapa Táctico de Ecuador y los indicadores de Precisión en tiempo real.🔐 Buenas Prácticas de Seguridad y Hardening🚨 Riesgos de Operación Conocidos (OPSEC)Baneo de Firma de Red (Rate Limiting): Si se mantiene el escáner operando con una frecuencia de 1 minuto, los firewalls (WAF) de Google o Meta detectarán la IP del servidor.Mitigación implementada: Ingrese al panel del engranaje ⚙️ y configure la Frecuencia de Barrido a 10 o 15 minutos para simular tráfico humano legítimo y proteger la firma de red.🛠️ Hardening del ServidorAislamiento de MongoDB: No exponga el puerto 27017 al exterior de la red. Modifique /etc/mongod.conf para enlazar únicamente a la interfaz de loopback 127.0.0.1.Firewall Local (UFW): Cierre todos los accesos directos de los microservicios e interfases internas, permitiendo únicamente el tráfico de control web:
+Aislamiento de Casos: El analista puede seleccionar una sola de las submisiones activas (ej. sicariato guayaquil) para limpiar el espectro de datos, filtrando la lista de tarjetas y el mapa táctico de inmediato.
+
+### 🧩 Funcionalidades Detalladas
+- Sincronización por Lotes (Batching): Diseñado para preservar la integridad del procesador. Si se ingresan 20 misiones pero el lote está fijado en 1, el orquestador procesará de 1 en 1 de arriba hacia abajo de manera descendente.
+- Filtros Inteligentes en Cascada: Al presionar un sub-objetivo en la barra superior, la UI aislará los hallazgos en la pantalla y posicionará los marcadores del mapa Leaflet en torno a ese criterio de búsqueda específico.
+- Garantía Anti-Bloqueo de Interfaz: Toda la volumetría de datos y parseo geográfico pasa por filtros useMemo en React, lo que impide re-renders innecesarios y elimina cualquier retraso o lag al tipear texto en la UI.
+- Fórmulas Forenses Blindadas: Las ecuaciones de la tasa de precisión ($VP / [VP+FP]$) y el tiempo medio de detección ($TMD$) se calculan basándose en los históricos globales de la base de datos, impidiendo desajustes matemáticos al usar filtros parciales en el frontend.
+
+### 📸 Capturas de la Interfaz de Usuario
+(Reemplace las rutas con imágenes reales al subirlas a producción en GitHub)
+
+Pantalla de acceso seguro encargada de la validación mediante Tokens JWT.
+
+Dashboard Global mostrando el Filtro interactivo de Submisiones, el Mapa Táctico de Ecuador y los indicadores de Precisión en tiempo real.
+
+### 🔐 Buenas Prácticas de Seguridad y Hardening
+### 🚨 Riesgos de Operación Conocidos (OPSEC)
+Baneo de Firma de Red (Rate Limiting): Si se mantiene el escáner operando con una frecuencia de 1 minuto, los firewalls (WAF) de Google o Meta detectarán la IP del servidor.
+
+Mitigación implementada: Ingrese al panel del engranaje ⚙️ y configure la Frecuencia de Barrido a 10 o 15 minutos para simular tráfico humano legítimo y proteger la firma de red.
+
+### 🛠️ Hardening del Servidor
+Aislamiento de MongoDB: No exponga el puerto 27017 al exterior de la red. Modifique /etc/mongod.conf para enlazar únicamente a la interfaz de loopback 127.0.0.1.
+
+Firewall Local (UFW): Cierre todos los accesos directos de los microservicios e interfases internas, permitiendo únicamente el tráfico de control web:
+
+```Bash
+sudo ufw default deny incoming
+sudo ufw allow 3000/tcp # Acceso al Dashboard Web
+sudo ufw enable
+```
+
+### 🔍 Troubleshooting y Gestión de Logs
+🚨 Comando de Inspección Crítica (Logs del Orquestador)
+Si desea observar el comportamiento interno del motor multihilo de extracción en tiempo real y auditar los saltos de lote sin el envoltorio de PM2, detenga el proceso de monitorización e inícielo manualmente con la siguiente instrucción de consola:
+
+```Bash
+pm2 stop ESPIA-MONITOR
+/opt/social-monitor/venv/bin/python3 /opt/social-monitor/monitor.py
+```
+Este comando desplegará los logs con la estructura exacta de tiempos y lotes solicitada para las auditorías de relevo.
+
+### 🔄 Reinicio Rápido de Emergencia (Ecosistema)
+Para reiniciar todos los microservicios y restaurar sockets caídos tras un cambio de red por DHCP, ejecute:
+
+```Bash
+pm2 restart all
+```
+
+### 🧠 Corrección del Error Runtime: isExactMatch is not defined
+Causa: Conflicto del motor de compilación Next.js (Turbopack) que retiene archivos corruptos en memoria caché tras un guardado de código caliente.
+
+Solución Quirúrgica:
+
+```Bash
+cd /opt/social-monitor/frontend
+rm -rf .next
+npm run build
+pm2 restart DASHBOARD-WEB
+```
+
+### 💾 Procedimiento de Respaldo y Recuperación
+Respaldo de Inteligencia Acumulada (Hot Backup)
+```Bash
+mongodump --db social_alert_db --out /opt/backups/osint_backup_$(date +%F)
+```
+Recuperación ante Desastres (Disaster Recovery)
+```Bash
+mongorestore --db social_alert_db --drop /opt/backups/osint_backup_ANTERIOR/social_alert_db
+```
+
+### 🧹 Guía de Mantenimiento
+Rotación de Logs Preventiva: Evite que los registros de PM2 saturen el almacenamiento de 80 GB instalando el módulo de rotación automática:
+
+```Bash
+pm2 install pm2-logrotate
+```
+Actualización de Firmas DOM: Debido a las modificaciones periódicas en la maquetación web de las redes sociales, se sugiere actualizar las dependencias de los navegadores headless de forma mensual:
+
+```Bash
+/opt/social-monitor/venv/bin/playwright install chromium
+```
+
+### 🛣️ Roadmap Futuro
+- [ ] Integración de proxies rotativos residenciales cifrados en los microservicios *-INTEL.
+
+- [ ] Implementación de un modelo de Inteligencia Actoral local (LLM mediante Ollama) para la categorización avanzada del nivel de riesgo.
+
+- [ ] Generación y exportación automatizada de reportes PDF bajo firmas criptográficas hash.
+
+### 📜 Licencia, Créditos y Contacto
+Créditos
+- Autor Principal: Ing. Stalyn Pauta Cuji.
+
+- Tutor de Investigación: Cuerpo Docente UNIR.
+
+- Institución: UNIR (Universidad Internacional de La Rioja) - Trabajo de Fin de Máster en Ciberseguridad.
+
+### Licencia
+Este software se distribuye con fines de investigación académica y monitorización pasiva OSINT. Se distribuye bajo la licencia MIT. Consulte el archivo LICENSE para más detalles.
+
+
+
+
 
