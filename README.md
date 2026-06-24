@@ -75,7 +75,6 @@ El sistema está optimizado para actuar bajo condiciones estrictas de **Sigilo O
 
 El ecosistema separa de forma modular las responsabilidades de captura, persistencia, control y presentación de datos a través de 7 microservicios independientes administrados por PM2:
 
-```text
    ┌─────────────────────────────────────────────────────────────────────────┐
    │                            DASHBOARD-WEB                                │
    │                       (Next.js / Puerto 3000)                           │
