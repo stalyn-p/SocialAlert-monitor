@@ -1,4 +1,4 @@
-# 🛡️ OPERACIONES DE CIBERDEFENSA: Social Monitor OSINT
+# 🛡️ OPERACIONES DE CIBERSEGURIDAD: Social Monitor OSINT
 
 <div align="center">
 
