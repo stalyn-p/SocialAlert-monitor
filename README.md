@@ -228,12 +228,16 @@ Para fines de evaluación académica en la UNIR o rápida auditoría, el sistema
 
 ### 1. Descarga e Importación
 Máquina virtual preconfigurada (OVA): permite desplegar el entorno completo del sistema sin necesidad de realizar instalaciones o configuraciones adicionales.
+
 •	https://mega.nz/file/Pxh1TTSR#YNtWuXLH1p46mq4ew0W4j_l5aNRQ5L9ah0a4PAMNFNU 
 Repositorio del proyecto: contiene el código fuente del sistema, organizado por módulos, junto con los archivos necesarios para su compilación y mantenimiento.
+
 •	https://github.com/stalyn-p/SocialAlert-monitor.git  
 Manual de usuario: incluye las instrucciones para la configuración y utilización de las principales funcionalidades del sistema.
+
 •	https://mega.nz/file/DxgS2J4Z#lgRNiTe3j8ALPWOD2xzqIv2OSoRKG7sPp2PprK9PmgM 
 Video demostrativo: presenta el funcionamiento general del sistema y ejemplifica el uso de sus principales características.
+
 •	https://mega.nz/file/apJllIST#6jOgl87mRtg0o1SDSpCyBlGzOnRvpJKVFZwFspg7zlk 
 
 
