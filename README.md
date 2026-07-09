@@ -227,19 +227,19 @@ Repositorio forense donde impactan las publicaciones extraídas validadas:
 Para fines de evaluación académica en la UNIR o rápida auditoría, el sistema completo se distribuye comprimido en formato .OVA alojado en la nube. Esta máquina cuenta con auto-descubrimiento DHCP.
 
 ### 1. Descarga e Importación
-Máquina virtual preconfigurada (OVA): permite desplegar el entorno completo del sistema sin necesidad de realizar instalaciones o configuraciones adicionales. 
+**Máquina virtual preconfigurada (OVA):** permite desplegar el entorno completo del sistema sin necesidad de realizar instalaciones o configuraciones adicionales. 
 ```Bash
 https://mega.nz/file/Pxh1TTSR#YNtWuXLH1p46mq4ew0W4j_l5aNRQ5L9ah0a4PAMNFNU 
 ```
-Repositorio del proyecto: contiene el código fuente del sistema, organizado por módulos, junto con los archivos necesarios para su compilación y mantenimiento.
+**Repositorio del proyecto:** contiene el código fuente del sistema, organizado por módulos, junto con los archivos necesarios para su compilación y mantenimiento.
 ```Bash
 https://github.com/stalyn-p/SocialAlert-monitor.git  
 ```
-Manual de usuario: incluye las instrucciones para la configuración y utilización de las principales funcionalidades del sistema.
+**Manual de usuario:** incluye las instrucciones para la configuración y utilización de las principales funcionalidades del sistema.
 ```Bash
 https://mega.nz/file/DxgS2J4Z#lgRNiTe3j8ALPWOD2xzqIv2OSoRKG7sPp2PprK9PmgM 
 ```
-Video demostrativo: presenta el funcionamiento general del sistema y ejemplifica el uso de sus principales características.
+**Video demostrativo:** presenta el funcionamiento general del sistema y ejemplifica el uso de sus principales características.
 ```Bash
 https://mega.nz/file/apJllIST#6jOgl87mRtg0o1SDSpCyBlGzOnRvpJKVFZwFspg7zlk 
 ```
